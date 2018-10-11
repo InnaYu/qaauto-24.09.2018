@@ -3,9 +3,9 @@ This instruction for MAC OS
 Tools installation
 You need to download and install:
  - 'Community' version of Intellij IDEA;
- - JDK 10.0.2 
- - Firefox version 62 
- - Download git 
+ - JDK 10.0.2; 
+ - Firefox version 62;
+ - Download and install git;
 
 
 Tools setup
@@ -18,10 +18,10 @@ pom.xml this is file wich described the entire project structure and contains in
 
 .gitignore files this is files which conteins modules which can't be run.
 
-How oppen project and run:
+How open project and run:
 
 1.Copy the git link to the project https://github.com/InnaYu/qaauto-24.09.2018
 2.Open IntelliJ IDEA
 3.Insert the link and download the project
-4.Download all the necessary libraries
+4.Download all the necessary libraries and choose java 10
 5.Run the test - Click green 'play' button
