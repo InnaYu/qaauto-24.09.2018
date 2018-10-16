@@ -27,24 +27,25 @@ public class LoginTest {
     public void successfullLoginTest(){
         String validLogin = "innatestauto@gmail.com";
         String validPassword = "DgL-ce3-9mm-TKE";
+        String loginXpath = "//*[@id=\"login-email\"]";
+        String passwordXpath = "//*[@id=\"login-password\"]";
+        String signInButtonXpath = "//*[@id=\"login-submit\"]";
 
 
         WebDriver webDriver = new FirefoxDriver();
         webDriver.navigate().to("https://www.linkedin.com");
         Assert.assertEquals(webDriver.getCurrentUrl(),"https://www.linkedin.com/", "Home page URL is wrong");
 
-
-        WebElement login = webDriver.findElement(By.xpath("//*[@id=\"login-email\"]"));
+        WebElement login = webDriver.findElement(By.xpath(loginXpath));
         login.sendKeys(validLogin);
 
-        WebElement password = webDriver.findElement(By.xpath("//*[@id=\"login-password\"]"));
+        WebElement password = webDriver.findElement(By.xpath(passwordXpath));
         password.sendKeys(validPassword);
 
-        WebElement signInButton = webDriver.findElement(By.xpath("//*[@id=\"login-submit\"]"));
+        WebElement signInButton = webDriver.findElement(By.xpath(signInButtonXpath));
         signInButton.click();
 
         Assert.assertEquals(webDriver.getCurrentUrl(),"https://www.linkedin.com/feed/", "Account page URL is wrong");
-
 
         webDriver.quit();
 
