@@ -25,16 +25,20 @@ public class LoginTest {
      */
     @Test
     public void successfullLoginTest(){
+        String validLogin = "innatestauto@gmail.com";
+        String validPassword = "DgL-ce3-9mm-TKE";
+
 
         WebDriver webDriver = new FirefoxDriver();
         webDriver.navigate().to("https://www.linkedin.com");
         Assert.assertEquals(webDriver.getCurrentUrl(),"https://www.linkedin.com/", "Home page URL is wrong");
 
+
         WebElement login = webDriver.findElement(By.xpath("//*[@id=\"login-email\"]"));
-        login.sendKeys("innatestauto@gmail.com");
+        login.sendKeys(validLogin);
 
         WebElement password = webDriver.findElement(By.xpath("//*[@id=\"login-password\"]"));
-        password.sendKeys("DgL-ce3-9mm-TKE");
+        password.sendKeys(validPassword);
 
         WebElement signInButton = webDriver.findElement(By.xpath("//*[@id=\"login-submit\"]"));
         signInButton.click();
