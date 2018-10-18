@@ -59,19 +59,29 @@ public class LoginTest {
     public void negativeLoginTest(){
 
         webDriver.navigate().to("https://www.linkedin.com");
+
+        LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertEquals(webDriver.getCurrentUrl(),"https://www.linkedin.com/",
                 "Login page URL is wrong");
 
-
-        WebElement userEmailField = webDriver.findElement(By.xpath("//*[@id=\"login-email\"]"));
-        WebElement userPasswordField = webDriver.findElement(By.xpath("//*[@id=\"login-password\"]"));
-        WebElement signInButton = webDriver.findElement(By.xpath("//*[@id=\"login-submit\"]"));
-
-        userEmailField.sendKeys("a@v.c");
-        userPasswordField.sendKeys("");
-        signInButton.click();
+        loginPage.login("a@v.c", "");
 
         Assert.assertEquals(webDriver.getCurrentUrl(),"https://www.linkedin.com/",
+                "Login page URL is wrong");
+
+    }
+
+    @Test
+    public void invalidPasswordNegativeLoginTest(){
+        webDriver.navigate().to("https://www.linkedin.com");
+
+        LoginPage loginPage = new LoginPage(webDriver);
+        Assert.assertEquals(webDriver.getCurrentUrl(),"https://www.linkedin.com/",
+                "Login page URL is wrong");
+
+        loginPage.login("innatestauto@gmail.com", "laLa-omc90_99");
+
+        Assert.assertEquals(webDriver.getCurrentUrl(),"https://www.linkedin.com/uas/login-submit?loginSubmitSource=GUEST_HOME",
                 "Login page URL is wrong");
 
     }
