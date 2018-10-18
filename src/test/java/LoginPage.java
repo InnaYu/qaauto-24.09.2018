@@ -19,8 +19,6 @@ public class LoginPage {
         userEmailField = webDriver.findElement(By.xpath("//*[@id=\"login-email\"]"));
         userPasswordField = webDriver.findElement(By.xpath("//*[@id=\"login-password\"]"));
         signInButton = webDriver.findElement(By.xpath("//*[@id=\"login-submit\"]"));
-
-
     }
 
     public void login(String userEmail, String userPassword){
