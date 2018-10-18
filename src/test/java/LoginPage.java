@@ -1,21 +1,34 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 public class LoginPage {
 
-    WebDriver webDriver;
+    private   WebDriver webDriver;
 
-    WebElement userEmailField ;
-    WebElement userPasswordField ;
-    WebElement signInButton ;
+    private WebElement userEmailField ;
+    private WebElement userPasswordField ;
+    private WebElement signInButton ;
 
     public LoginPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         initElements();
+
     }
 
-    public void initElements(){
+    public boolean isPageLoaded(){
+        return webDriver.getCurrentUrl().equals("https://www.linkedin.com/")
+                && webDriver.getTitle().equals("LinkedIn: Log In or Sign Up")
+                && isSignInButtonDisplayed();
+    }
+
+    public boolean isSignInButtonDisplayed(){
+        return signInButton.isDisplayed();
+
+    }
+
+    private void initElements(){
         userEmailField = webDriver.findElement(By.xpath("//*[@id=\"login-email\"]"));
         userPasswordField = webDriver.findElement(By.xpath("//*[@id=\"login-password\"]"));
         signInButton = webDriver.findElement(By.xpath("//*[@id=\"login-submit\"]"));
@@ -26,4 +39,7 @@ public class LoginPage {
         userPasswordField.sendKeys(userPassword);
         signInButton.click();
     }
+
+
+
 }
