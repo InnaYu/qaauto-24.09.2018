@@ -1,20 +1,25 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage {
 
     private   WebDriver webDriver;
 
+@FindBy(xpath = "//*[@id=\"login-email\"]")
     private WebElement userEmailField ;
+
+@FindBy(xpath = "//*[@id=\"login-password\"]")
     private WebElement userPasswordField ;
+
+@FindBy(xpath = "//*[@id=\"login-submit\"]")
     private WebElement signInButton ;
 
     public LoginPage(WebDriver webDriver) {
         this.webDriver = webDriver;
-        initElements();
-
+        PageFactory.initElements(webDriver, this);
     }
 
     public boolean isPageLoaded(){
@@ -28,17 +33,14 @@ public class LoginPage {
 
     }
 
-    private void initElements(){
-        userEmailField = webDriver.findElement(By.xpath("//*[@id=\"login-email\"]"));
-        userPasswordField = webDriver.findElement(By.xpath("//*[@id=\"login-password\"]"));
-        signInButton = webDriver.findElement(By.xpath("//*[@id=\"login-submit\"]"));
-    }
-
-    public void login(String userEmail, String userPassword){
+    public HomePage login(String userEmail, String userPassword){
         userEmailField.sendKeys(userEmail);
         userPasswordField.sendKeys(userPassword);
         signInButton.click();
+        return new HomePage(webDriver);
     }
+
+
 
 
 

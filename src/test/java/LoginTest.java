@@ -45,14 +45,11 @@ public class LoginTest {
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page is not loaded.");
-        loginPage.login("innatestauto@gmail.com", "DgL-ce3-9mm-TKE");
+        HomePage homePage =loginPage.login("innatestauto@gmail.com", "DgL-ce3-9mm-TKE");
 
-        HomePage homePage=new HomePage(webDriver);
         Assert.assertTrue(homePage.isPageLoaded(),
-                "Home page is not loaded");
+                "Home page is not displayed on Login Page");
 
-       // Assert.assertTrue(homePage.profileNavItem.isDisplayed(),
-            //    "profileNavItem is not displayed on Login page");
 
     }
 
@@ -112,6 +109,7 @@ public class LoginTest {
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page is not loaded.");
     }
+    /*
 
     @Test
     public void negativeWrongEmailTest () {
@@ -129,10 +127,10 @@ public class LoginTest {
             e.printStackTrace();
         }
         Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login page is not loaded");
-    }
+    }*/
 
 
-
+/*
     @Test
     public void negativeWrongEmailAndPasswordTest () {
         webDriver.navigate().to("https://www.linkedin.com");
@@ -149,9 +147,9 @@ public class LoginTest {
             e.printStackTrace();
         }
         Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login page is not loaded"); //https://www.linkedin.com/checkpoint/rp/request-password-reset-submit-redir?userName=AgGEDCGbSHnBIQAAAWacToM7Z1p9dWqIR7hc5SR_o815sG8aiQaLa2jPK2N95B9du6s&sid=Pwd-Reset%3Affc614bd-1c4f-40a7-a606-4351dd78bde4&ut=1KXlps8E78IEs1
-    }
+    }*/
 
-
+/*
     @Test
     public void successfullLoginAfterWrongEmailAndPasswordTest () {
         webDriver.navigate().to("https://www.linkedin.com");
@@ -172,8 +170,8 @@ public class LoginTest {
         loginSubmitPage.login("innatestauto@gmail.com", "DgL-ce3-9mm-TKE");
         HomePage homePage = new HomePage(webDriver);
         Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded");
-    }
-
+    }*/
+/*
         @Test
         public void negativeLoginAfterWrongEmailAndPasswordTest () {
             webDriver.navigate().to("https://www.linkedin.com");
@@ -194,6 +192,6 @@ public class LoginTest {
             loginSubmitPage.login("innatestauto@gmail.com", "90тмовKE");
             Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login page is not loaded");
 
-        }
+        } */
 
 }
