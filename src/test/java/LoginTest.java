@@ -191,13 +191,9 @@ public class LoginTest {
             }
             Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login page is not loaded"); //https://www.linkedin.com/checkpoint/rp/request-password-reset-submit-redir?userName=AgGEDCGbSHnBIQAAAWacToM7Z1p9dWqIR7hc5SR_o815sG8aiQaLa2jPK2N95B9du6s&sid=Pwd-Reset%3Affc614bd-1c4f-40a7-a606-4351dd78bde4&ut=1KXlps8E78IEs1
 
-            loginSubmitPage.login("innatestauto@gmail.com","90тмовKE");
+            loginSubmitPage.login("innatestauto@gmail.com", "90тмовKE");
             Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login page is not loaded");
 
-
-    }
-
-
-
+        }
 
 }
