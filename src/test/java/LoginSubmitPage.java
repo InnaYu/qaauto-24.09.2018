@@ -1,18 +1,26 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class LoginSubmitPage {
 
     private WebDriver webDriver;
+
+    @FindBy(xpath ="//*[@id=\"session_key-login\"]")
     private WebElement userEmailField ;
+
+    @FindBy(xpath ="//*[@id=\"session_password-login\"]")
     private WebElement userPasswordField ;
+
+    @FindBy(xpath ="//*[@id=\"btn-primary\"]")
     private WebElement signInButton ;
 
 
     public LoginSubmitPage(WebDriver webDriver){
         this.webDriver=webDriver;
-        initElements();
+        PageFactory.initElements(webDriver, this);
     }
 
     public boolean isPageLoaded(){
@@ -21,22 +29,10 @@ public class LoginSubmitPage {
                 && isSignInButtonDisplayed();
     }
 
-
     public boolean isSignInButtonDisplayed(){
         return signInButton.isDisplayed();
 
     }
 
-    private void initElements(){
-        userEmailField = webDriver.findElement(By.xpath("//*[@id=\"session_key-login\"]"));
-        userPasswordField = webDriver.findElement(By.xpath("//*[@id=\"session_password-login\"]"));
-        signInButton = webDriver.findElement(By.xpath("//*[@id=\"btn-primary\"]"));
-    }
-
-    public void login(String userEmail, String userPassword){
-        userEmailField.sendKeys(userEmail);
-        userPasswordField.sendKeys(userPassword);
-        signInButton.click();
-    }
 
 }

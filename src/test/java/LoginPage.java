@@ -8,13 +8,13 @@ public class LoginPage {
 
     private   WebDriver webDriver;
 
-@FindBy(xpath = "//*[@id=\"login-email\"]")
+    @FindBy(xpath = "//*[@id=\"login-email\"]")
     private WebElement userEmailField ;
 
-@FindBy(xpath = "//*[@id=\"login-password\"]")
+    @FindBy(xpath = "//*[@id=\"login-password\"]")
     private WebElement userPasswordField ;
 
-@FindBy(xpath = "//*[@id=\"login-submit\"]")
+    @FindBy(xpath = "//*[@id=\"login-submit\"]")
     private WebElement signInButton ;
 
     public LoginPage(WebDriver webDriver) {
@@ -38,6 +38,20 @@ public class LoginPage {
         userPasswordField.sendKeys(userPassword);
         signInButton.click();
         return new HomePage(webDriver);
+    }
+
+    public void loginForLoginPage(String userEmail, String userPassword) {
+        userEmailField.sendKeys(userEmail);
+        userPasswordField.sendKeys(userPassword);
+        signInButton.click();
+    }
+
+    public LoginSubmitPage loginForSubmitPage(String userEmail, String userPassword) {
+        userEmailField.sendKeys(userEmail);
+        userPasswordField.sendKeys(userPassword);
+        signInButton.click();
+        return new LoginSubmitPage(webDriver);
+
     }
 
 
