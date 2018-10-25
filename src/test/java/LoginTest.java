@@ -3,6 +3,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static java.lang.Thread.sleep;
@@ -18,6 +19,15 @@ public class LoginTest {
     @AfterMethod
     public void afterMethod() {
         webDriver.quit();
+    }
+
+    @DataProvider
+    public Object[][] ValidDataProvider() {
+        return new Object[][]{
+                { "innatestauto@gmail.com","DgL-ce3-9mm-TKE" },
+                { "Innatestauto@gmail.com","DgL-ce3-9mm-TKE"},
+                { " innatestauto@gmail.com ","DgL-ce3-9mm-TKE"}
+        };
     }
 
 
@@ -36,31 +46,31 @@ public class LoginTest {
      * PostCondition:
      * - Close FF browser.
      */
-    @Test
-    public void successfullLoginTest() {
+    @Test(dataProvider = "ValidDataProvider")
+    public void successfullLoginTest(String userEmail, String userPassword) {
 
-        webDriver.navigate().to("https://www.linkedin.com");
+        webDriver.get("https://www.linkedin.com");
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page is not loaded.");
-        HomePage homePage =loginPage.login("innatestauto@gmail.com", "DgL-ce3-9mm-TKE");
 
+        HomePage homePage =loginPage.login(userEmail, userPassword);
         Assert.assertTrue(homePage.isPageLoaded(),
                 "Home page is not displayed on Login Page");
-
-
     }
 
 
+
+
     @Test
-    public void negativeLoginWithEmptyPasswordTest () {
+    public void negativeLoginWithEmptyPasswordTest () throws InterruptedException {
 
         webDriver.navigate().to("https://www.linkedin.com");
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page is not loaded.");
 
-        loginPage.loginForLoginPage("a@v.c", "");
+        loginPage.login("a@v.c", "");
 
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page is not loaded.");
@@ -68,7 +78,7 @@ public class LoginTest {
     }
 
     @Test
-    public void negativeLoginWithEmptyEmailTest(){
+    public void negativeLoginWithEmptyEmailTest() throws InterruptedException {
         webDriver.navigate().to("https://www.linkedin.com");
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(),
@@ -80,11 +90,12 @@ public class LoginTest {
                 "Login page is not loaded.");
     }
     @Test
-    public void negativeLoginWithEmptyEmailAndPasswordTest(){
+    public void negativeLoginWithEmptyEmailAndPasswordTest() throws InterruptedException {
         webDriver.navigate().to("https://www.linkedin.com");
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page is not loaded.");
+
 
         loginPage.login("", "");
         Assert.assertTrue(loginPage.isPageLoaded(),
@@ -97,9 +108,9 @@ public class LoginTest {
         webDriver.navigate().to("https://www.linkedin.com");
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded.");
-        LoginSubmitPage loginSubmitPage=loginPage.loginForSubmitPage("inamTestauto@gmail.com", "DgL-ce3-9mm-TKE");
+        LoginSubmitPage loginSubmitPage=loginPage.login("inamTestauto@gmail.com", "DgL-ce3-9mm-TKE");
 
-        sleep(3000);
+
         Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login page is not loaded");
     }
 
@@ -111,7 +122,7 @@ public class LoginTest {
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded.");
 
-        LoginSubmitPage loginSubmitPage=loginPage.loginForSubmitPage("inna88@gmail.com", "Df0928");
+        LoginSubmitPage loginSubmitPage=loginPage.login("inna88@gmail.com", "Df0928");
 
         sleep(3000);
         Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login page is not loaded"); //https://www.linkedin.com/checkpoint/rp/request-password-reset-submit-redir?userName=AgGEDCGbSHnBIQAAAWacToM7Z1p9dWqIR7hc5SR_o815sG8aiQaLa2jPK2N95B9du6s&sid=Pwd-Reset%3Affc614bd-1c4f-40a7-a606-4351dd78bde4&ut=1KXlps8E78IEs1
