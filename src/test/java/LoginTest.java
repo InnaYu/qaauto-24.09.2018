@@ -24,28 +24,52 @@ public class LoginTest {
     @DataProvider
     public Object[][] ValidDataProvider() {
         return new Object[][]{
-                { "innatestauto@gmail.com","DgL-ce3-9mm-TKE" },
-                { "Innatestauto@gmail.com","DgL-ce3-9mm-TKE"},
-                { " innatestauto@gmail.com ","DgL-ce3-9mm-TKE"}
+                {"innatestauto@gmail.com", "DgL-ce3-9mm-TKE"},
+                {"Innatestauto@gmail.com", "DgL-ce3-9mm-TKE"},
+                {" innatestauto@gmail.com ", "DgL-ce3-9mm-TKE"}
+        };
+    }
+
+    @DataProvider
+    public Object[][] NegativeLoginPageDataProvider() {
+            return new Object[][]{
+                    {"innatestauto@gmail.com", ""},
+                    {"", "DgL-ce3-9mm-TKE"},
+                    {"", ""}
+        };
+    }
+
+    @DataProvider
+    public Object[][] NegativeLoginSubmitDataProvider() {
+        return new Object[][]{
+                {"8ksd3fkv", "8ncm4nv", "Укажите действительный адрес эл. почты.", ""},
+                {"innatest@gmail.com", "DgL-ce3-9mm-TKE", "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", ""},
+                {"carl@ua.fm", "DgL-ce3-9mm-TKE", "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", ""},
+                {"innatestauto@gmail.com", "mv1ncm4nv", "", "Это неверный пароль. Повторите попытку или измените пароль."},
+                {"innatestauto@gmail.com", "mvm", "", "Пароль должен содержать не менее 6 символов."},
+
         };
     }
 
 
-    /**
-     * Preconditions:
-     * - Open FF browser.
-     * <p>
-     * Scenario:
-     * - Navigate to https://www.linkedin.com;
-     * - Verify that login page is loaded;
-     * - Enter userEmail into userEmail field;
-     * - Enter userPassword into userPassword field;
-     * - Click on signIn button;
-     * - Verify that Home Page is loaded.
-     * <p>
-     * PostCondition:
-     * - Close FF browser.
-     */
+
+
+
+        /**
+         * Preconditions:
+         * - Open FF browser.
+         * <p>
+         * Scenario:
+         * - Navigate to https://www.linkedin.com;
+         * - Verify that login page is loaded;
+         * - Enter userEmail into userEmail field;
+         * - Enter userPassword into userPassword field;
+         * - Click on signIn button;
+         * - Verify that Home Page is loaded.
+         * <p>
+         * PostCondition:
+         * - Close FF browser.
+         */
     @Test(dataProvider = "ValidDataProvider")
     public void successfullLoginTest(String userEmail, String userPassword) {
 
@@ -61,116 +85,45 @@ public class LoginTest {
 
 
 
+    @Test(dataProvider = "NegativeLoginPageDataProvider")
+    public void negativeEmptyLoginFieldsTest (String userEmail, String userPassword) {
 
-    @Test
-    public void negativeLoginWithEmptyPasswordTest () throws InterruptedException {
-
-        webDriver.navigate().to("https://www.linkedin.com");
+        webDriver.get("https://www.linkedin.com");
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page is not loaded.");
 
-        loginPage.login("a@v.c", "");
+        loginPage.login(userEmail, userPassword);
 
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page is not loaded.");
 
     }
 
-    @Test
-    public void negativeLoginWithEmptyEmailTest() throws InterruptedException {
-        webDriver.navigate().to("https://www.linkedin.com");
-        LoginPage loginPage = new LoginPage(webDriver);
-        Assert.assertTrue(loginPage.isPageLoaded(),
-                "Login page is not loaded.");
 
-
-        loginPage.login("", "Lalala");
-        Assert.assertTrue(loginPage.isPageLoaded(),
-                "Login page is not loaded.");
-    }
-    @Test
-    public void negativeLoginWithEmptyEmailAndPasswordTest() throws InterruptedException {
-        webDriver.navigate().to("https://www.linkedin.com");
-        LoginPage loginPage = new LoginPage(webDriver);
-        Assert.assertTrue(loginPage.isPageLoaded(),
-                "Login page is not loaded.");
-
-
-        loginPage.login("", "");
-        Assert.assertTrue(loginPage.isPageLoaded(),
-                "Login page is not loaded.");
-    }
-
-
-    @Test
-    public void negativeWrongEmailTest () throws InterruptedException {
-        webDriver.navigate().to("https://www.linkedin.com");
-        LoginPage loginPage = new LoginPage(webDriver);
-        Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded.");
-        LoginSubmitPage loginSubmitPage=loginPage.login("inamTestauto@gmail.com", "DgL-ce3-9mm-TKE");
-
-
-        Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login page is not loaded");
-    }
-
-
-
-    @Test
-    public void negativeWrongEmailAndPasswordTest () throws InterruptedException {
-        webDriver.navigate().to("https://www.linkedin.com");
+    @Test(dataProvider = "NegativeLoginSubmitDataProvider")
+    public void negativeWrongLoginTest (String userEmail, String userPassword, String emailValidationMessage, String passwordValidationMessage)  {
+        webDriver.get("https://www.linkedin.com");
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded.");
 
-        LoginSubmitPage loginSubmitPage=loginPage.login("inna88@gmail.com", "Df0928");
+        LoginSubmitPage loginSubmitPage=loginPage.login(userEmail, userPassword);
 
-        sleep(3000);
-        Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login page is not loaded"); //https://www.linkedin.com/checkpoint/rp/request-password-reset-submit-redir?userName=AgGEDCGbSHnBIQAAAWacToM7Z1p9dWqIR7hc5SR_o815sG8aiQaLa2jPK2N95B9du6s&sid=Pwd-Reset%3Affc614bd-1c4f-40a7-a606-4351dd78bde4&ut=1KXlps8E78IEs1
+        Assert.assertTrue(loginSubmitPage.isPageLoaded(), "LoginSubmit page is not loaded");
+
+        Assert.assertEquals(loginSubmitPage.errorMessageForEmail(), emailValidationMessage, "Actual error message is not the same that Expected");
+
+        Assert.assertEquals(loginSubmitPage.errorMessageForPassword(), passwordValidationMessage, "Actual error message is not the same that Expected");
+
     }
-
-/*
-    @Test
-    public void successfullLoginAfterWrongEmailAndPasswordTest () {
-        webDriver.navigate().to("https://www.linkedin.com");
-        LoginPage loginPage = new LoginPage(webDriver);
-        Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded.");
-        loginPage.login("inna88@gmail.com", "Df0928");
-
-        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(webDriver);
-
-
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login page is not loaded"); //https://www.linkedin.com/checkpoint/rp/request-password-reset-submit-redir?userName=AgGEDCGbSHnBIQAAAWacToM7Z1p9dWqIR7hc5SR_o815sG8aiQaLa2jPK2N95B9du6s&sid=Pwd-Reset%3Affc614bd-1c4f-40a7-a606-4351dd78bde4&ut=1KXlps8E78IEs1
-
-        loginSubmitPage.login("innatestauto@gmail.com", "DgL-ce3-9mm-TKE");
-        HomePage homePage = new HomePage(webDriver);
-        Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded");
-    }*/
-/*
-        @Test
-        public void negativeLoginAfterWrongEmailAndPasswordTest () {
-            webDriver.navigate().to("https://www.linkedin.com");
-            LoginPage loginPage = new LoginPage(webDriver);
-            Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded.");
-            loginPage.login("inna88@gmail.com", "Df0928");
-
-            LoginSubmitPage loginSubmitPage = new LoginSubmitPage(webDriver);
-
-
-            try {
-                sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login page is not loaded"); //https://www.linkedin.com/checkpoint/rp/request-password-reset-submit-redir?userName=AgGEDCGbSHnBIQAAAWacToM7Z1p9dWqIR7hc5SR_o815sG8aiQaLa2jPK2N95B9du6s&sid=Pwd-Reset%3Affc614bd-1c4f-40a7-a606-4351dd78bde4&ut=1KXlps8E78IEs1
-
-            loginSubmitPage.login("innatestauto@gmail.com", "90тмовKE");
-            Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login page is not loaded");
-
-        } */
-
 }
+
+
+
+
+
+
+
+
+
+

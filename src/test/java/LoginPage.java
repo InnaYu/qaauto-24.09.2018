@@ -49,28 +49,11 @@ public class LoginPage {
         if (webDriver.getCurrentUrl().contains("/uas/login-submit")) {
             return (T) new LoginSubmitPage(webDriver);
         }else {
-            return (T) new HomePage(webDriver);
+            return (T) new LoginPage(webDriver);
         }
 
     }
 
-
-/*
-
-    public void loginForLoginPage(String userEmail, String userPassword) {
-        userEmailField.sendKeys(userEmail);
-        userPasswordField.sendKeys(userPassword);
-        signInButton.click();
-    }
-
-    public LoginSubmitPage loginForSubmitPage(String userEmail, String userPassword) {
-        userEmailField.sendKeys(userEmail);
-        userPasswordField.sendKeys(userPassword);
-        signInButton.click();
-        return new LoginSubmitPage(webDriver);
-
-    }
-    */
 
 
 

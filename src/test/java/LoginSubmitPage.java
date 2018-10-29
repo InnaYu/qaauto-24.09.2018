@@ -1,4 +1,3 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,6 +16,17 @@ public class LoginSubmitPage {
     @FindBy(xpath ="//*[@id=\"btn-primary\"]")
     private WebElement signInButton ;
 
+    @FindBy(xpath ="//*[@id=\"control_gen_1\"]")
+    private WebElement generalAlertMessage;
+
+    @FindBy(xpath ="//*[@id=\"session_key-login-error\"]")
+    private WebElement emailValidationMessage;
+
+    @FindBy(xpath ="//*[@id=\"session_password-login-error\"]")
+    private WebElement passwordValidationMessage;
+
+
+
 
     public LoginSubmitPage(WebDriver webDriver){
         this.webDriver=webDriver;
@@ -26,7 +36,20 @@ public class LoginSubmitPage {
     public boolean isPageLoaded(){
         return webDriver.getCurrentUrl().equals("https://www.linkedin.com/uas/login-submit?loginSubmitSource=GUEST_HOME")
                 && webDriver.getTitle().equals("Войти в LinkedIn")
-                && isSignInButtonDisplayed();
+                && isSignInButtonDisplayed()
+                && isGeneralAlertMessage();
+    }
+
+
+
+    public String errorMessageForEmail(){
+        return emailValidationMessage.getText();
+
+    }
+
+    public String errorMessageForPassword(){
+        return passwordValidationMessage.getText();
+
     }
 
     public boolean isSignInButtonDisplayed(){
@@ -34,5 +57,13 @@ public class LoginSubmitPage {
 
     }
 
+    public boolean isGeneralAlertMessage(){
+        return generalAlertMessage.isDisplayed();
+
+    };
+
+
+
 
 }
+
