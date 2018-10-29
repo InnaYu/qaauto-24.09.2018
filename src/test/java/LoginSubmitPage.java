@@ -17,7 +17,7 @@ public class LoginSubmitPage {
     private WebElement signInButton ;
 
     @FindBy(xpath ="//*[@id=\"control_gen_1\"]")
-    private WebElement generalAlertMessage;
+    private WebElement alertBox;
 
     @FindBy(xpath ="//*[@id=\"session_key-login-error\"]")
     private WebElement emailValidationMessage;
@@ -25,7 +25,8 @@ public class LoginSubmitPage {
     @FindBy(xpath ="//*[@id=\"session_password-login-error\"]")
     private WebElement passwordValidationMessage;
 
-
+//div role alert
+    //При заполнении формы были допущены ошибки. Проверьте и исправьте отмеченные поля.
 
 
     public LoginSubmitPage(WebDriver webDriver){
@@ -37,17 +38,15 @@ public class LoginSubmitPage {
         return webDriver.getCurrentUrl().equals("https://www.linkedin.com/uas/login-submit?loginSubmitSource=GUEST_HOME")
                 && webDriver.getTitle().equals("Войти в LinkedIn")
                 && isSignInButtonDisplayed()
-                && isGeneralAlertMessage();
+                && alertBox.isDisplayed();
     }
 
-
-
-    public String errorMessageForEmail(){
+    public String getEmailValidationMessage() {
         return emailValidationMessage.getText();
-
     }
 
-    public String errorMessageForPassword(){
+
+    public String getPasswordValidationMessage(){
         return passwordValidationMessage.getText();
 
     }
@@ -57,11 +56,10 @@ public class LoginSubmitPage {
 
     }
 
-    public boolean isGeneralAlertMessage(){
-        return generalAlertMessage.isDisplayed();
 
-    };
-
+    public String getAlertMessageText() {
+       return alertBox.getText();
+    }
 
 
 

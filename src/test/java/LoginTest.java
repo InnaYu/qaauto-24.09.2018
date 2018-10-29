@@ -10,10 +10,13 @@ import static java.lang.Thread.sleep;
 
 public class LoginTest {
     WebDriver webDriver;
+    LoginPage loginPage;
 
     @BeforeMethod
     public void beforeMethod() {
         webDriver = new FirefoxDriver();
+        webDriver.get("https://www.linkedin.com");
+        loginPage= new LoginPage(webDriver);
     }
 
     @AfterMethod
@@ -39,19 +42,6 @@ public class LoginTest {
         };
     }
 
-    @DataProvider
-    public Object[][] NegativeLoginSubmitDataProvider() {
-        return new Object[][]{
-                {"8ksd3fkv", "8ncm4nv", "Укажите действительный адрес эл. почты.", ""},
-                {"innatest@gmail.com", "DgL-ce3-9mm-TKE", "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", ""},
-                {"carl@ua.fm", "DgL-ce3-9mm-TKE", "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", ""},
-                {"innatestauto@gmail.com", "mv1ncm4nv", "", "Это неверный пароль. Повторите попытку или измените пароль."},
-                {"innatestauto@gmail.com", "mvm", "", "Пароль должен содержать не менее 6 символов."},
-
-        };
-    }
-
-
 
 
 
@@ -73,8 +63,6 @@ public class LoginTest {
     @Test(dataProvider = "ValidDataProvider")
     public void successfullLoginTest(String userEmail, String userPassword) {
 
-        webDriver.get("https://www.linkedin.com");
-        LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page is not loaded.");
 
@@ -88,8 +76,6 @@ public class LoginTest {
     @Test(dataProvider = "NegativeLoginPageDataProvider")
     public void negativeEmptyLoginFieldsTest (String userEmail, String userPassword) {
 
-        webDriver.get("https://www.linkedin.com");
-        LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page is not loaded.");
 
@@ -100,22 +86,45 @@ public class LoginTest {
 
     }
 
+    @DataProvider
+    public Object[][] validationMessagesCombination() {
+        return new Object[][]{
+                {"innatestauto@gmail.com", "wrong", "", ""},
+                {"1ksd3fkv", "1ncm4nv", "Укажите действительный адрес эл. почты.", ""},
+                {"innatest@gmail.com", "DgL-ce3-9mm-TKE", "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", ""},
+                {"carl@ua.fm", "DgL-ce3-9mm-TKE", "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", ""},
+                {"innatestauto@gmail.com", "mv1ncm4nv", "", "Это неверный пароль. Повторите попытку или измените пароль."},
+                {"innatestauto@gmail.com", "mvm", "", "Пароль должен содержать не менее 6 символов."},
 
-    @Test(dataProvider = "NegativeLoginSubmitDataProvider")
-    public void negativeWrongLoginTest (String userEmail, String userPassword, String emailValidationMessage, String passwordValidationMessage)  {
-        webDriver.get("https://www.linkedin.com");
-        LoginPage loginPage = new LoginPage(webDriver);
+        };
+    }
+
+    @Test(dataProvider = "validationMessagesCombination")
+    public void validationMessageOnInvalidEmailPasswordTest (String userEmail,
+                                                        String userPassword,
+                                                        String emailValidationMessage,
+                                                        String passwordValidationMessage)  {
+
+
         Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded.");
 
         LoginSubmitPage loginSubmitPage=loginPage.login(userEmail, userPassword);
-
         Assert.assertTrue(loginSubmitPage.isPageLoaded(), "LoginSubmit page is not loaded");
 
-        Assert.assertEquals(loginSubmitPage.errorMessageForEmail(), emailValidationMessage, "Actual error message is not the same that Expected");
+        Assert.assertEquals(loginSubmitPage.getAlertMessageText(),
+                "При заполнении формы были допущены ошибки. Проверьте и исправьте отмеченные поля.",
+                "Alert message text is wrong");
 
-        Assert.assertEquals(loginSubmitPage.errorMessageForPassword(), passwordValidationMessage, "Actual error message is not the same that Expected");
+       Assert.assertEquals(loginSubmitPage.getEmailValidationMessage(), emailValidationMessage,
+                "Email validation message is wrong");
+
+       Assert.assertEquals(loginSubmitPage.getPasswordValidationMessage(), passwordValidationMessage,
+                "Password validation message is wrong");
 
     }
+
+
+
 }
 
 
