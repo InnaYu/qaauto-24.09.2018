@@ -5,6 +5,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static java.lang.Thread.sleep;
+
 public class SearchTest {
 
     WebDriver webDriver;
@@ -38,14 +40,30 @@ public class SearchTest {
      * PostConditions:
      * -Close Browser.
      */
-    @Test
-    public void basicSearchTest(){
+    public void basicSearchTest() throws InterruptedException {
+
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page is not loaded.");
 
-        HomePage homePage =loginPage.login("innatestauto@gmail.com", "DgL-ce3-9mm-TKE");
+        HomePage homePage = loginPage.login("innatestauto@gmail.com", "DgL-ce3-9mm-TKE");
         Assert.assertTrue(homePage.isPageLoaded(),
                 "Home page is not displayed on Login Page");
 
+        homePage.enterSearchTerm(homePage.searchTerm);
+
+        sleep(10000);
+
+        SearchPage searchPage = new SearchPage(webDriver);
+
+        Assert.assertTrue(searchPage.isPageLoaded(),"Search Page page is not loaded.");
+
+        sleep(10000);
+
+        Assert.assertEquals(searchPage.isDisplayedSearchResults(), 10, "Other count of search results");
+
+        Assert.assertTrue(searchPage.foundSearchTerm(homePage.searchTerm),"SearchTerm was not found");
+
+
     }
+
 }
