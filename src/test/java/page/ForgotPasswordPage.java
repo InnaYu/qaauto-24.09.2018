@@ -1,7 +1,10 @@
+package page;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import util.GMailService;
 
 public class ForgotPasswordPage {
 
@@ -27,15 +30,30 @@ public class ForgotPasswordPage {
                 && isResetPasswordButtonDisplayed();
     }
 
-    //Reset Password | LinkedIn   Изменить пароль | LinkedIn
+
 
     public boolean isResetPasswordButtonDisplayed(){
         return resetPasswordButton.isDisplayed();
     }
 
     public RequestPasswordSubmitPage resetPasword(String userEmail) {
+
+        GMailService gMailService = new GMailService();
+        gMailService.connect();
+
         searchEmailField.sendKeys(userEmail);
         resetPasswordButton.click();
+
+        String messageSubject = "данное сообщение содержит ссылку для изменения пароля";
+        String messageTo = "security-noreply@linkedin.com";
+        String messageFrom = "innatestauto@gmail.com";
+
+
+        String message = gMailService.waitMessage(messageSubject, messageTo, messageFrom, 60);
+        System.out.println("Content: " + message);
+
+
+
         return new RequestPasswordSubmitPage(webDriver);
 
     }

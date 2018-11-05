@@ -1,3 +1,5 @@
+package page;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -40,10 +42,13 @@ public class LoginPage {
 
     public ForgotPasswordPage clickOnForgotPasswordButton(){
 
+
         forgotPasswordButton.click();
+
+
+
         return new ForgotPasswordPage(webDriver);
     }
-
 
 
     public <T> T login(String userEmail, String userPassword)  {

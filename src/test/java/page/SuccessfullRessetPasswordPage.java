@@ -1,7 +1,10 @@
+package page;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import page.HomePage;
 
 public class SuccessfullRessetPasswordPage {
 
@@ -10,7 +13,7 @@ public class SuccessfullRessetPasswordPage {
     @FindBy(xpath = "//*[@id=\"app__container\"]/div[1]/header")//переписать локатор
     private WebElement confirmMessage;
 
-    @FindBy(xpath = "//*[@id=\"app__container\"]/header/div/div/nav/a")
+    @FindBy(xpath = "//*[@id=\"app__container\"]/header/div/div/nav/a")//переписать локатор
     private WebElement backtoLinkedInButton;
 
 
@@ -33,8 +36,6 @@ public class SuccessfullRessetPasswordPage {
     public HomePage backToLinkedIn(){
         backtoLinkedInButton.click();
         return new HomePage(webDriver);
-
-
 
     }
 

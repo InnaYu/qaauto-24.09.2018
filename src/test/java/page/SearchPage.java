@@ -1,3 +1,5 @@
+package page;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +16,7 @@ import static java.lang.Thread.sleep;
 public class SearchPage {
 
 
-    ;
+
     private WebDriver webDriver;
 
     @FindBy(xpath = "//li[contains(@class, 'search-result search-result__occluded-item')]")

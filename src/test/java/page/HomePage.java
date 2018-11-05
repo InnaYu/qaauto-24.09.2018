@@ -1,3 +1,5 @@
+package page;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -6,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import static java.lang.Thread.sleep;
 
-public class HomePage  {
+public class HomePage extends BasePage {
 
 
 
@@ -65,8 +67,5 @@ public class HomePage  {
 
 
     }
-//*[@id="ember274"]
 
-
-////*[@id="ember273"]
 }
