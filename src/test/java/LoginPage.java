@@ -7,6 +7,7 @@ import static java.lang.Thread.sleep;
 
 public class LoginPage {
 
+
     private   WebDriver webDriver;
 
     @FindBy(xpath = "//*[@id=\"login-email\"]")
@@ -17,6 +18,9 @@ public class LoginPage {
 
     @FindBy(xpath = "//*[@id=\"login-submit\"]")
     private WebElement signInButton ;
+
+    @FindBy(xpath = "//*[@class=\"link-forgot-password\"]")
+    private WebElement forgotPasswordButton ;
 
     public LoginPage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -33,6 +37,14 @@ public class LoginPage {
         return signInButton.isDisplayed();
 
     }
+
+    public ForgotPasswordPage clickOnForgotPasswordButton(){
+
+        forgotPasswordButton.click();
+        return new ForgotPasswordPage(webDriver);
+    }
+
+
 
     public <T> T login(String userEmail, String userPassword)  {
         userEmailField.sendKeys(userEmail);
@@ -51,6 +63,8 @@ public class LoginPage {
         }else {
             return (T) new LoginPage(webDriver);
         }
+
+
 
     }
 

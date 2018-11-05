@@ -4,18 +4,28 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class HomePage {
+import static java.lang.Thread.sleep;
+
+public class HomePage  {
+
 
 
     private WebDriver webDriver;
 
-    public String searchTerm="HR";
+    private String searchTerm="HR";
 
     @FindBy(xpath = "//li[@id='profile-nav-item']")
     private WebElement profileNavItem;
 
-    @FindBy(xpath = "//*//*[@role='combobox']")
+    @FindBy(xpath = "//input[contains(@aria-owns, 'results')]")
     private WebElement searchField;
+
+    @FindBy(xpath = "//*[@data-control-name=\"nav.settings_signout\"]")
+    private WebElement logoutButton;
+
+    @FindBy(xpath = "//*[@id=\"nav-settings__dropdown-trigger\"]/div/span[2]/li-icon")
+    private WebElement openMenuDarButton;
+
 
 
 
@@ -36,10 +46,27 @@ public class HomePage {
 
     }
 
-    public HomePage enterSearchTerm(String searchTerm) {
+    public SearchPage search(String searchTerm)  {
         searchField.sendKeys(searchTerm);
         searchField.sendKeys(Keys.RETURN);
-        return new HomePage(webDriver);
+        try {
+            sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return new SearchPage(webDriver);
+    }
+
+    public LoginPage logout(){
+        openMenuDarButton.click();
+        logoutButton.click();
+        return new LoginPage(webDriver);
+
+
 
     }
+//*[@id="ember274"]
+
+
+////*[@id="ember273"]
 }

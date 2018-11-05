@@ -42,6 +42,7 @@ public class LoginSubmitPage {
     }
 
     public String getEmailValidationMessage() {
+
         return emailValidationMessage.getText();
     }
 
