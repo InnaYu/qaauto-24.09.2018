@@ -27,13 +27,13 @@ public class GMailService {
      * @param args - dummy args for main()
      */
     public static void main(String[] args) {
-        String messageSubject = "данное сообщение содержит ссылку для изменения пароля";
-        String messageTo = "security-noreply@linkedin.com";
-        String messageFrom = "innatestauto@gmail.com";
+        String messageSubject = "Inna, данное сообщение содержит ссылку для изменения пароля";
+        String messageTo = "innatestauto@gmail.com";
+        String messageFrom = "security-noreply@linkedin.com";
 
         GMailService gMailService = new GMailService();
         gMailService.connect();
-        String message = gMailService.waitMessage(messageSubject, messageTo, messageFrom, 60);
+        String message = gMailService.waitMessage(messageSubject, messageTo, messageFrom, 180);
         System.out.println("Content: " + message);
     }
 

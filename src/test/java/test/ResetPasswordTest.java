@@ -53,12 +53,12 @@ public class ResetPasswordTest extends BaseTest{
                 "Forgot Password Page page is not loaded.");
 
 
-        RequestPasswordSubmitPage requestPasswordSubmitPage = forgotPasswordPage.resetPasword(userEmail);
+        RequestPasswordSubmitPage requestPasswordSubmitPage = forgotPasswordPage.findAccount(userEmail);
         Assert.assertTrue(requestPasswordSubmitPage.isPageLoaded(),
                 "Checkpoint Page page is not loaded.");
 
 
-        sleep(80000);
+
         ResetPasswordPage resetPasswordPage = requestPasswordSubmitPage.navigateToLinkFromEmail();
         Assert.assertTrue(resetPasswordPage.isPageLoaded(),
                 "Reset Password Page page is not loaded.");
@@ -66,7 +66,7 @@ public class ResetPasswordTest extends BaseTest{
 
         SuccessfullRessetPasswordPage successfullRessetPasswordPage = resetPasswordPage.enterNewPassword(newPassword);
         Assert.assertTrue(successfullRessetPasswordPage.isPageLoaded(),
-                "Reset Password Page page is not loaded.");
+                "SuccessfullRessetPasswordPage  is not loaded.");
 
         HomePage homePage =successfullRessetPasswordPage.backToLinkedIn();
         Assert.assertTrue(homePage.isPageLoaded(),
