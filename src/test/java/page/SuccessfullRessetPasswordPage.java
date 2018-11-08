@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import page.HomePage;
 
-public class SuccessfullRessetPasswordPage {
+public class SuccessfullRessetPasswordPage extends BasePage{
 
     private WebDriver webDriver;
 
@@ -17,7 +17,7 @@ public class SuccessfullRessetPasswordPage {
     private WebElement backtoLinkedInButton;
 
 
-    public SuccessfullRessetPasswordPage(WebDriver webDriver) {
+    public SuccessfullRessetPasswordPage(WebDriver webDriver)  {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
     }

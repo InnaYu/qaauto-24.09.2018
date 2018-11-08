@@ -48,14 +48,15 @@ public class ResetPasswordTest extends BaseTest{
 
 
         ForgotPasswordPage forgotPasswordPage = loginPage.clickOnForgotPasswordButton();
-        sleep(3000);
+
         Assert.assertTrue(forgotPasswordPage.isPageLoaded(),
                 "Forgot Password Page page is not loaded.");
 
 
         RequestPasswordSubmitPage requestPasswordSubmitPage = forgotPasswordPage.findAccount(userEmail);
+
         Assert.assertTrue(requestPasswordSubmitPage.isPageLoaded(),
-                "Checkpoint Page page is not loaded.");
+               "RequestPasswordSubmitPage is not loaded.");
 
 
 
@@ -76,9 +77,9 @@ public class ResetPasswordTest extends BaseTest{
 
         LoginPage loginPage=homePage.logout();
 
-        sleep(6000);
+
         loginPage.login(userEmail,newPassword);
-        sleep(3000);
+
         Assert.assertTrue(homePage.isPageLoaded(),
                 "Home page is not displayed on Login Page");
 
