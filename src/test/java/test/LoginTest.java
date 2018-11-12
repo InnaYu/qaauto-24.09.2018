@@ -15,9 +15,9 @@ public class LoginTest extends BaseTest {
     @DataProvider
     public Object[][] ValidDataProvider() {
         return new Object[][]{
-                {"innatestauto@gmail.com", "DgL-ce3-9mm-TKE"},
-                {"Innatestauto@gmail.com", "DgL-ce3-9mm-TKE"},
-                {" innatestauto@gmail.com ", "DgL-ce3-9mm-TKE"}
+                {"innatestauto@gmail.com", "La=La-Lend"},
+                {"Innatestauto@gmail.com", "La=La-Lend"},
+                {" innatestauto@gmail.com ", "La=La-Lend"}
         };
     }
 
@@ -25,7 +25,7 @@ public class LoginTest extends BaseTest {
     public Object[][] NegativeLoginPageDataProvider() {
             return new Object[][]{
                     {"innatestauto@gmail.com", ""},
-                    {"", "DgL-ce3-9mm-TKE"},
+                    {"", "La=La-Lend"},
                     {"", ""}
         };
     }
@@ -76,8 +76,8 @@ public class LoginTest extends BaseTest {
         return new Object[][]{
                 {"innatestauto@gmail.com", "wrong", "", ""},
                 {"1ksd3fkv", "1ncm4nv", "Укажите действительный адрес эл. почты.", ""},
-                {"innatest@gmail.com", "DgL-ce3-9mm-TKE", "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", ""},
-                {"carl@ua.fm", "DgL-ce3-9mm-TKE", "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", ""},
+                {"innatest@gmail.com", "La=La-Lend", "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", ""},
+                {"carl@ua.fm", "La=La-Lend", "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", ""},
                 {"innatestauto@gmail.com", "mv1ncm4nv", "", "Это неверный пароль. Повторите попытку или измените пароль."},
                 {"innatestauto@gmail.com", "mvm", "", "Пароль должен содержать не менее 6 символов."},
 

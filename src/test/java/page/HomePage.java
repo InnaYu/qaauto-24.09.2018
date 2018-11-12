@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import static java.lang.Thread.sleep;
 
 public class HomePage extends BasePage {
 
@@ -29,36 +28,47 @@ public class HomePage extends BasePage {
     private WebElement openMenuDarButton;
 
 
-
-
-
+    /**
+     * @param webDriver
+     * initialising the elements within the constructor of the PageObject (PO) by taking advantage of the “this” keyword to refer to the current class instance
+     */
     public HomePage(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
     }
 
+    /**
+     * @return the true if all conditions are the same: the current link contains the transmitted value, Title contains the transmitted value and the profileNavItem is displayed
+     */
     public boolean isPageLoaded(){
         return webDriver.getCurrentUrl().equals("https://www.linkedin.com/feed/")
                 && webDriver.getTitle().contains("LinkedIn")
-                && profileNavItem.isDisplayed();
+                && isprofileNavItemDisplayed();
     }
 
+    /**
+     * @return true if profileNavItem is Displayed
+     */
     public boolean isprofileNavItemDisplayed(){
+        waitUntilElementIsVisible(profileNavItem,5);
         return profileNavItem.isDisplayed();
 
     }
 
+    /**
+     * @param searchTerm
+     * @return SearchPage after entering searchTerm in searchField and clicking enter
+     */
     public SearchPage search(String searchTerm)  {
+        waitUntilElementIsClickable(searchField);
         searchField.sendKeys(searchTerm);
         searchField.sendKeys(Keys.RETURN);
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return new SearchPage(webDriver);
     }
 
+    /**
+     * @return LoginPage after logout
+     */
     public LoginPage logout(){
         openMenuDarButton.click();
         logoutButton.click();

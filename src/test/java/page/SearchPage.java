@@ -13,7 +13,7 @@ import java.util.List;
 
 import static java.lang.Thread.sleep;
 
-public class SearchPage {
+public class SearchPage  extends BasePage{
 
 
 
@@ -26,31 +26,49 @@ public class SearchPage {
     private WebElement searchBar;
 
 
-
-
+    /**
+     * @param webDriver
+     * initialising the elements in SearchPage within the constructor of the PageObject (PO) by taking advantage of the “this” keyword to refer to the current class instance
+     *      *
+     */
     public SearchPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
     }
 
 
+    /**
+     * @return the true if all conditions are the same: the current link contains the transmitted value, Title contains the transmitted value and the searchBar is displayed
+     *
+     */
     public boolean isPageLoaded(){
+        waitUntilElementIsClickable(searchBar);
         return webDriver.getCurrentUrl().contains("/search/results")
                 && webDriver.getTitle().contains("\"HR\" | Поиск | LinkedIn")
-                && searchBar.isDisplayed();
+                && isDisplayedSearchBar();
     }
 
+    /**
+     * @return true if searchBar is Displayed
+     */
     public boolean isDisplayedSearchBar() {
         return searchBar.isDisplayed();
 
     }
 
 
+    /**
+     * @return count of visible SearchResults
+     */
     public int getSearchResultsCount() {
+
         return searchResultList.size();
     }
 
 
+    /**
+     * @return searchResultStringList wich contains SearchTerm and scrolling page down
+     */
     public List getSearchResults() {
         List<String> searchResultStringList = new ArrayList<String>();
 
